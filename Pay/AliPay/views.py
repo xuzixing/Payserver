@@ -137,7 +137,7 @@ def save_setting(request):  # 配置响应结果setting
 
 
 def pay_request2response(request):
-    action = "alipay_trade_cancel_response"
+    action = "alipay_trade_pay_response"
     response = response_pay_tmp_succuss
     rq = request.POST
     biz_str = rq.get('biz_content')
