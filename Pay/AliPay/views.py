@@ -137,6 +137,7 @@ def save_setting(request):  # 配置响应结果setting
 
 
 def pay_request2response(request):
+    action = "alipay_trade_cancel_response"
     response = response_pay_tmp_succuss
     rq = request.POST
     biz_str = rq.get('biz_content')
@@ -146,53 +147,56 @@ def pay_request2response(request):
     num = random.randint(10000000000000, 99999999999999)
     num = str(num)
     trade_no = time1+num
-    response['trade_no'] = trade_no
-    response['out_trade_no'] = biz_data['out_trade_no']
-    response['total_amount'] = biz_data['total_amount']
+    response[action]['trade_no'] = trade_no
+    response[action]['out_trade_no'] = biz_data['out_trade_no']
+    response[action]['total_amount'] = biz_data['total_amount']
     if 'discountable_amount' in biz_data:
         real_amount = float(response['total_amount']) - float(biz_data['discountable_amount'])
-        response['receipt_amount'] = str(real_amount)
+        response[action]['receipt_amount'] = str(real_amount)
     else:
-        response['receipt_amount'] = biz_data['total_amount']
-    response['gmt_payment'] = rq['timestamp']
+        response[action]['receipt_amount'] = biz_data['total_amount']
+    response[action]['gmt_payment'] = rq['timestamp']
     return response
 
 
 def refund_request2response(request):
+    action = "alipay_trade_refund_response"
     response = response_refund_tmp_succuss
     rq = request.POST
     biz_str = rq.get('biz_content')
     biz_str = re.sub('\'', '\"', biz_str)
     biz_data = json.loads(biz_str)
-    response['out_trade_no'] = biz_data['out_trade_no']
-    response['trade_no'] = biz_data['trade_no']
+    response[action]['out_trade_no'] = biz_data['out_trade_no']
+    response[action]['trade_no'] = biz_data['trade_no']
     return response
 
 
 def cancel_request2response(request):
+    action = "alipay_trade_cancel_response"
     response = response_cancel_tmp_succuss
     rq = request.POST
     biz_str = rq.get('biz_content')
     biz_str = re.sub('\'', '\"', biz_str)
     biz_data = json.loads(biz_str)
-    response['out_trade_no'] = biz_data['out_trade_no']
-    response['trade_no'] = biz_data['trade_no']
+    response[action]['out_trade_no'] = biz_data['out_trade_no']
+    response[action]['trade_no'] = biz_data['trade_no']
     return response
 
 
 def query_request2response(request):
+    action = "alipay_trade_query_response"
     response = response_query_tmp_succuss
     rq = request.POST
     time1 = time.strftime("%Y%m%d%H%M%S")
     num = random.randint(10000000000000, 99999999999999)
     num = str(num)
     trade_no = time1 + num
-    response['trade_no'] = trade_no
+    response[action]['trade_no'] = trade_no
     biz_str = rq.get('biz_content')
     biz_str = re.sub('\'', '\"', biz_str)
     biz_data = json.loads(biz_str)
-    response['out_trade_no'] = biz_data['out_trade_no']
-    #response['trade_no'] = biz_data['trade_no']
+    response[action]['out_trade_no'] = biz_data['out_trade_no']
+    #response[action]['trade_no'] = biz_data['trade_no']
     return response
 
 
