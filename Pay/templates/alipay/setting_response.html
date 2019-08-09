@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>setting response</title>
+</head>
+<body >
+    {% csrf_token %}
+    <div id="content" style="background-color:#bac5dd;height:400px;width:400px;margin:0 auto;">
+        <h1>Response result setting</h1>
+        <br>
+        <big>设置响应结果</big>
+        <br>
+        <form action="{% url 'save_setting' %}", method="post">
+            <label>
+                <input type="radio" name="result" value="10000" >
+            </label>接口调用成功<br>
+            <label>
+                <input type="radio" name="result" value="20000" >
+            </label>服务不可用<br>
+            <label>
+                <input type="radio" name="result" value="20001" >
+            </label>授权权限不足<br>
+            <label>
+                <input type="radio" name="result" value="40001" >
+            </label>缺少必选参数<br>
+            <label>
+                <input type="radio" name="result" value="40002" >
+            </label>非法的参数<br>
+            <label>
+                <input type="radio" name="result" value="40004" >
+            </label>业务处理失败<br>
+            <label>
+                <input type="radio" name="result" value="40006" >
+            </label>权限不足<br>
+            <br>
+            <big>设置应答延时</big>
+            <br>
+            <label for="user_lic">延迟时间（ms）: </label><input id="response_delay" name="response_delay" type="number" min="0" max="3000" step="100" value ="0"/>
+            <br>
+             <input type="submit" name="submit" value="提交">
+        </form>
+    </div>
+</body>
+</html>
