@@ -7,7 +7,7 @@ response_pay_tmp_succuss = {
         "buyer_logon_id": "159****5620",
         "total_amount": 120.88,
         "receipt_amount": "88.88",
-        "gmt_payment": "2014-11-27 15:45:57",
+        "gmt_payment": "2018-07-27 15:45:57",
         "fund_bill_list": [
             {
                 "fund_channel": "ALIPAYACCOUNT",
@@ -29,11 +29,11 @@ response_refund_tmp_succuss= {
     "alipay_trade_cancel_response": {
         "code": "10000",
         "msg": "Success",
-        "trade_no": "2013112011001004330000121536",
+        "trade_no": "2019082011001004330000121536",
         "out_trade_no": "6823789339978248",
         "retry_flag": "N",
         "action": "close",
-        "gmt_refund_pay": "2016-11-27 15:45:57",
+        "gmt_refund_pay": "2018-07-27 15:45:57",
         "refund_settlement_id": "2018101610032004620239146945"
     },
     "sign": ""
@@ -46,11 +46,11 @@ response_cancel_tmp_succuss = {
     "alipay_trade_cancel_response": {
         "code": "10000",
         "msg": "Success",
-        "trade_no": "2013112011001004330000121536",
+        "trade_no": "2019082011001004330000121536",
         "out_trade_no": "6823789339978248",
         "retry_flag": "N",
         "action": "close",
-        "gmt_refund_pay": "2016-11-27 15:45:57",
+        "gmt_refund_pay": "2018-07-27 15:45:57",
         "refund_settlement_id": "2018101610032004620239146945"
     },
     "sign": ""
@@ -63,7 +63,7 @@ response_query_tmp_succuss = {
     "alipay_trade_query_response": {
         "code": "10000",
         "msg": "Success",
-        "trade_no": "2013112011001004330000121536",
+        "trade_no": "2019082011001004330000121536",
         "out_trade_no": "6823789339978248",
         "buyer_logon_id": "159****5620",
         "trade_status": "TRADE_CLOSED",
@@ -78,7 +78,7 @@ response_query_tmp_succuss = {
         "buyer_pay_amount": 8.88,
         "point_amount": 10,
         "invoice_amount": 12.11,
-        "send_pay_date": "2014-11-27 15:45:57",
+        "send_pay_date": "2018-07-27 15:45:57",
         "receipt_amount": "15.25",
         "store_id": "NJ_S_001",
         "terminal_id": "NJ_T_001",

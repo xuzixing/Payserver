@@ -7,7 +7,8 @@ import re
 from AliPay.response_data import *
 from Pay.myrsa import rsa_sign, rsa_verify
 import time
-
+import datetime
+import random
 code_now = "10000"
 msg_now = "Succuss"
 delay = 0
@@ -54,7 +55,7 @@ def refund(request):
         response[action]["sub_code"] = "isv.invalid-signature"
         response[action]["sub_msg"] = "Invalid signature"
     else:
-        response = response_pay_tmp_fail
+        response = response_refund_tmp_fail
         response[action]["code"] = code_now
         response[action]["msg"] = msg_now
     # 生成响应签名
@@ -79,7 +80,7 @@ def cancel(request):
         response[action]["sub_code"] = "isv.invalid-signature"
         response[action]["sub_msg"] = "Invalid signature"
     else:
-        response = response_pay_tmp_fail
+        response = response_cancel_tmp_fail
         response[action]["code"] = code_now
         response[action]["msg"] = msg_now
     # 生成响应签名
@@ -89,6 +90,30 @@ def cancel(request):
 
     return HttpResponse(_delay(res))
 
+
+def query(request):
+    action = "alipay_trade_query_response"
+    # 验证签名
+    verrify_ok = verify_sign(request)
+    # 读取请求数据 写入到响应数据中
+    if code_now == "10000" and verrify_ok:
+        response = query_request2response(request)
+    elif not verrify_ok:
+        response = response_pay_tmp_fail
+        response[action]["code"] = "40002"
+        response[action]["msg"] = "Illegal parameters"
+        response[action]["sub_code"] = "isv.invalid-signature"
+        response[action]["sub_msg"] = "Invalid signature"
+    else:
+        response = response_query_tmp_fail
+        response[action]["code"] = code_now
+        response[action]["msg"] = msg_now
+    # 生成响应签名
+    response["sign"] = create_sign(action, response)
+    # 转为json
+    res = json.dumps(response)
+
+    return HttpResponse(_delay(res))
 
 def _delay(res):
     if delay > 0:
@@ -117,6 +142,16 @@ def pay_request2response(request):
     biz_str = rq.get('biz_content')
     biz_str = re.sub('\'', '\"', biz_str)
     biz_data = json.loads(biz_str)
+    year = str(datetime.datetime.now().year)
+    month = str(datetime.datetime.now().month)
+    day = str(datetime.datetime.now().day)
+    hour = str(datetime.datetime.now().hour)
+    minute = str(datetime.datetime.now().minute)
+    secend = str(datetime.datetime.now().second)
+    num = random.randint(10000000000000, 99999999999999)
+    num = str(num)
+    trade_no = year+month+day+hour+minute+secend+num
+    response['trade_no'] = trade_no
     response['out_trade_no'] = biz_data['out_trade_no']
     response['total_amount'] = biz_data['total_amount']
     if 'discountable_amount' in biz_data:
@@ -141,6 +176,17 @@ def refund_request2response(request):
 
 def cancel_request2response(request):
     response = response_cancel_tmp_succuss
+    rq = request.POST
+    biz_str = rq.get('biz_content')
+    biz_str = re.sub('\'', '\"', biz_str)
+    biz_data = json.loads(biz_str)
+    response['out_trade_no'] = biz_data['out_trade_no']
+    response['trade_no'] = biz_data['trade_no']
+    return response
+
+
+def query_request2response(request):
+    response = response_query_tmp_succuss
     rq = request.POST
     biz_str = rq.get('biz_content')
     biz_str = re.sub('\'', '\"', biz_str)
