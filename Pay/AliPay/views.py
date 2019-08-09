@@ -142,15 +142,10 @@ def pay_request2response(request):
     biz_str = rq.get('biz_content')
     biz_str = re.sub('\'', '\"', biz_str)
     biz_data = json.loads(biz_str)
-    year = str(datetime.datetime.now().year)
-    month = str(datetime.datetime.now().month)
-    day = str(datetime.datetime.now().day)
-    hour = str(datetime.datetime.now().hour)
-    minute = str(datetime.datetime.now().minute)
-    secend = str(datetime.datetime.now().second)
+    time1 = time.strftime("%Y%m%d%H%M%S")
     num = random.randint(10000000000000, 99999999999999)
     num = str(num)
-    trade_no = year+month+day+hour+minute+secend+num
+    trade_no = time1+num
     response['trade_no'] = trade_no
     response['out_trade_no'] = biz_data['out_trade_no']
     response['total_amount'] = biz_data['total_amount']
@@ -188,11 +183,16 @@ def cancel_request2response(request):
 def query_request2response(request):
     response = response_query_tmp_succuss
     rq = request.POST
+    time1 = time.strftime("%Y%m%d%H%M%S")
+    num = random.randint(10000000000000, 99999999999999)
+    num = str(num)
+    trade_no = time1 + num
+    response['trade_no'] = trade_no
     biz_str = rq.get('biz_content')
     biz_str = re.sub('\'', '\"', biz_str)
     biz_data = json.loads(biz_str)
     response['out_trade_no'] = biz_data['out_trade_no']
-    response['trade_no'] = biz_data['trade_no']
+    #response['trade_no'] = biz_data['trade_no']
     return response
 
 
